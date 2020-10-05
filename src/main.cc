@@ -1,10 +1,12 @@
-#include <SDL2/SDL.h>  
+#include "./SDL.h"
 #include <stdio.h>
+#include "./Camera.cc"
+#include "./Player.cc"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
-int main() {
+int main(int argc, char *argv[]) {
   bool running = true;
   SDL_Window* window = NULL;
   SDL_Surface*  screenSurface = NULL;
@@ -19,19 +21,24 @@ int main() {
     } else {
       //Get window surface
       screenSurface = SDL_GetWindowSurface( window );
-
     }
   }
 
+  auto camera = new Camera(screenSurface);
+  auto player = new Player();
   while(running) {
     SDL_Event event;
     /* DRAWING */
     //Fill the surface white
-    SDL_FillRect( screenSurface, NULL, SDL_MapRGB( screenSurface->format, 0xFF, 0xFF, 0xFF ) );
-    
+    SDL_FillRect(
+      screenSurface,
+      NULL,
+      SDL_MapRGB( screenSurface->format, 0xFF, 0xFF, 0xFF )
+    );
+    player->draw(camera);
+
     //Update the surface
     SDL_UpdateWindowSurface( window );
-
     /* INPUT POLLING */
     while( SDL_PollEvent( &event ) ){
       /* We are only worried about SDL_KEYDOWN and SDL_KEYUP events */
@@ -55,4 +62,9 @@ int main() {
     //Wait two seconds
     SDL_Delay( 1000 );
   }
+  return 1;
 }
+
+// int WinMain(int argc, char *argv[]) {
+//   return main(argc, argv);
+// }
