@@ -7,7 +7,30 @@
 Player::Player() {
   this->x = 10;
   this->y = 10;
+
+  this->speedX = 0;
+  this->speedY = 0;
 };
+
+/** Slows the player down to a stop */
+void Player::decelerate() {
+  if(this->speedX > 0) {
+    this->speedX -= 1;
+  } else if(this->speedX < 0) {
+    this->speedX += 1;
+  }
+  if(this->speedY > 0) {
+    this->speedY -= 1;
+  } else if(this->speedY < 0) {
+    this->speedY += 1;
+  }
+}
+
+void Player::tick() {
+  this->x += this->speedX;
+  this->y += this->speedY;
+  std::cout << this->x << ", " << this->y << "\n";
+}
 
 void Player::draw(Camera * camera) {
   auto x = this->x - camera->x;

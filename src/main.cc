@@ -10,27 +10,31 @@ const int SCREEN_HEIGHT = 480;
 void handleArrow(SDL_Keycode key, Player*player) {
   switch(key) {
     case SDLK_UP: {
+      printf("SDLK_UP\n");
       // do "up arrow stuff"
-      player->y -= 5;
+      player->speedY -= 2;
       break;
     }
     case SDLK_DOWN: {
+      printf("SDLK_DOWN\n");
       // do "down arrow stuff"
-      player->y += 5;
+      player->speedY += 2;
       break;
     }
     case SDLK_LEFT: {
-      player->x -= 5;
+      printf("SDLK_LEFT\n");
+      player->speedX -= 2;
       // do "left arrow stuff"
       break;
     }
     case SDLK_RIGHT: {
-      player->x += 5;
+      printf("SDLK_RIGHT\n");
+      player->speedX += 2;
       // do "right arrow stuff"
       break;
     }
     case SDLK_ESCAPE: {
-      printf("Existing");
+      printf("Existing\n");
       SDL_Quit();
       exit( 0 );
       break;
@@ -61,8 +65,12 @@ int main(int argc, char *argv[]) {
   auto camera = new Camera(screenSurface);
   auto player = new Player();
 
+
   while(running) {
     SDL_Event event;
+    /** RUN TICKS */
+    player->tick();
+
     /* DRAWING */
     //Fill the surface white
     SDL_FillRect(
@@ -72,6 +80,9 @@ int main(int argc, char *argv[]) {
     );
 
     player->draw(camera);
+    player->decelerate();
+    player->decelerate();
+    player->decelerate();
 
     //Update the surface
     SDL_UpdateWindowSurface( window );

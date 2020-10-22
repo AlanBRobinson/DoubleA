@@ -7,6 +7,11 @@ class Player {
   Player();
   int x;
   int y;
+  int speedX;
+  int speedY;
+
+  void decelerate();
 
   void draw(Camera * camera);
+  void tick();
 };
