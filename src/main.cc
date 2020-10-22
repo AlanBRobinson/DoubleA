@@ -6,11 +6,45 @@
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
+
+void handleArrow(SDL_Keycode key, Player*player) {
+  switch(key) {
+    case SDLK_UP: {
+      // do "up arrow stuff"
+      player->y -= 5;
+      break;
+    }
+    case SDLK_DOWN: {
+      // do "down arrow stuff"
+      player->y += 5;
+      break;
+    }
+    case SDLK_LEFT: {
+      player->x -= 5;
+      // do "left arrow stuff"
+      break;
+    }
+    case SDLK_RIGHT: {
+      player->x += 5;
+      // do "right arrow stuff"
+      break;
+    }
+    case SDLK_ESCAPE: {
+      printf("Existing");
+      SDL_Quit();
+      exit( 0 );
+      break;
+    }
+  }
+}
+
 int main(int argc, char *argv[]) {
   bool running = true;
   SDL_Window* window = NULL;
   SDL_Surface*  screenSurface = NULL;
+
   printf( "Started");
+
   if( SDL_Init( SDL_INIT_VIDEO ) < 0 ) {
     printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
   } else {
@@ -26,6 +60,7 @@ int main(int argc, char *argv[]) {
 
   auto camera = new Camera(screenSurface);
   auto player = new Player();
+
   while(running) {
     SDL_Event event;
     /* DRAWING */
@@ -35,32 +70,34 @@ int main(int argc, char *argv[]) {
       NULL,
       SDL_MapRGB( screenSurface->format, 0xFF, 0xFF, 0xFF )
     );
+
     player->draw(camera);
 
     //Update the surface
     SDL_UpdateWindowSurface( window );
+
     /* INPUT POLLING */
     while( SDL_PollEvent( &event ) ){
       /* We are only worried about SDL_KEYDOWN and SDL_KEYUP events */
       switch( event.type ){
-        case SDL_KEYDOWN:
+        case SDL_KEYDOWN: {
           printf( "Key press detected\n" );
-          running = false;
-
-          SDL_Quit();
-          exit( 0 );
+          auto key = event.key.keysym.sym;
+          handleArrow(key, player);
           break;
+        }
 
-        case SDL_KEYUP:
+        case SDL_KEYUP: {
           printf( "Key release detected\n" );
           break;
+        }
 
         default:
           break;
       }
     }
     //Wait two seconds
-    SDL_Delay( 1000 );
+    SDL_Delay( 100 );
   }
   return 1;
 }

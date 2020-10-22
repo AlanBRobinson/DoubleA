@@ -12,7 +12,6 @@ Player::Player() {
 void Player::draw(Camera * camera) {
   auto x = this->x - camera->x;
   auto y = this->y - camera->y;
-  std::cout << "Draw " << x << ", " << y << "\n";
   // Draw body
   SDL_Rect bodyRect = {
       x,
@@ -21,8 +20,8 @@ void Player::draw(Camera * camera) {
       100
   };
   SDL_Rect headRect = {
-    x,
-    y -100,
+    x + 15,
+    y -20,
     20,
     20
   };
