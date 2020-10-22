@@ -65,7 +65,6 @@ int main(int argc, char *argv[]) {
   auto camera = new Camera(screenSurface);
   auto player = new Player();
 
-
   while(running) {
     SDL_Event event;
     /** RUN TICKS */
