@@ -1,0 +1,11 @@
+g++ ^
+ -Iinclude ^
+ -include ./src/Vector.cc ^
+ -Llib ^
+ -W -Wall ^
+ -o main ^
+ ./src/main.cc ^
+ -lmingw32 ^
+ -lSDL2main ^
+ -lSDL2
+
