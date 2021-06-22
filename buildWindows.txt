@@ -1,5 +1,6 @@
 g++ ^
  -Iinclude ^
+ -include ./src/Vector.cc ^
  -Llib ^
  -W -Wall ^
  -o main ^

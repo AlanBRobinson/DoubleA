@@ -12,24 +12,24 @@ void handleArrow(SDL_Keycode key, Player*player) {
     case SDLK_UP: {
       printf("SDLK_UP\n");
       // do "up arrow stuff"
-      player->speedY -= 2;
+      player->speed = player->speed.addVector(Vector(0, -2));
       break;
     }
     case SDLK_DOWN: {
       printf("SDLK_DOWN\n");
       // do "down arrow stuff"
-      player->speedY += 2;
+      player->speed = player->speed.addVector(Vector(0, 2));
       break;
     }
     case SDLK_LEFT: {
       printf("SDLK_LEFT\n");
-      player->speedX -= 2;
+      player->speed = player->speed.addVector(Vector(-2, 0));
       // do "left arrow stuff"
       break;
     }
     case SDLK_RIGHT: {
       printf("SDLK_RIGHT\n");
-      player->speedX += 2;
+      player->speed = player->speed.addVector(Vector(2, 0));
       // do "right arrow stuff"
       break;
     }

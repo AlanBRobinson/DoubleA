@@ -1,14 +1,17 @@
+#pragma once
+
 class Vector {
-  Vector(int x, int y);
-  float x = 0;
-  float y = 0;
+  public:
+    Vector(float x, float y);
+    float x = 0;
+    float y = 0;
 
-  float getAngle();
-  void setAngle(float angle);
+    float getAngle();
+    Vector setAngle(float angle);
 
-  float getMagnitude();
-  void setMangnitude(float magnitude);
+    float getMagnitude();
+    Vector setMangnitude(float magnitude);
 
-  Vector addVector(Vector vector);
-  Vector normalize();
+    Vector addVector(Vector vector);
+    Vector normalize();
 };

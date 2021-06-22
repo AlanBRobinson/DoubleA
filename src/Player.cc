@@ -2,39 +2,25 @@
 #include "./SDL.h"
 #include "./Player.h"
 #include "./Camera.h"
+#include "./Vector.h"
 #include <iostream>
 
-Player::Player() {
-  this->x = 10;
-  this->y = 10;
-
-  this->speedX = 0;
-  this->speedY = 0;
-};
+Player::Player(): position(0, 0), speed(0, 0) {};
 
 /** Slows the player down to a stop */
 void Player::decelerate() {
-  if(this->speedX > 0) {
-    this->speedX -= 1;
-  } else if(this->speedX < 0) {
-    this->speedX += 1;
-  }
-  if(this->speedY > 0) {
-    this->speedY -= 1;
-  } else if(this->speedY < 0) {
-    this->speedY += 1;
-  }
+  this->speed = this->speed.setMangnitude( this->speed.getMagnitude() * 0.9 );
 }
 
 void Player::tick() {
-  this->x += this->speedX;
-  this->y += this->speedY;
-  std::cout << this->x << ", " << this->y << "\n";
+  this->position = this->position.addVector(this->speed);
+  std::cout << this->position.x << ", " << this->position.y << "\n";
 }
 
 void Player::draw(Camera * camera) {
-  auto x = this->x - camera->x;
-  auto y = this->y - camera->y;
+
+  int x = std::round( this->position.x - camera->x );
+  int y = std::round( this->position.y - camera->y );
   // Draw body
   SDL_Rect bodyRect = {
       x,
